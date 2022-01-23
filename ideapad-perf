@@ -1,0 +1,136 @@
+#!/bin/bash
+
+option=$1
+mode=$2
+
+help() {
+  echo "Syntax: ideapad-perf [OPTION] MODE"
+  echo
+  echo "Options:"
+  echo " -h, --help                   see this help message"
+  echo " -c, --check                  verify both performance and battery mode"
+  echo " -p, --performance-mode       set performance mode"
+  echo " -b, --battery-mode           set battery mode"
+  echo " -vp, --verify-performance    verify performance mode"
+  echo " -vb, --verify-battery        verify battery mode"
+  echo
+  echo "Valid performance modes:"
+  echo " ic, cooling                Intelligent Cooling"
+  echo " ep, performance            Extreme Performance"
+  echo " bs, battery                Battery Saving"
+  echo
+  echo "Valid battery modes:"
+  echo " rc, rapid                  Rapid Charge (with Battery Conservation disabled)"
+  echo " bc, conserve               Battery Conservation (with Rapid Charge disabled)"
+}
+
+check_acpi() {
+  if [[ -z "$(lsmod | grep 'acpi_call')" ]];
+    then
+    echo 'Module "acpi_call" not loaded, quitting.'
+    exit 1
+  fi  
+}      
+
+verify_performance() {
+    check_acpi
+    echo '\_SB.PCI0.LPC0.EC0.STMD' > /proc/acpi/call
+    stmd=$(cat /proc/acpi/call | cut -d '' -f1)
+    echo '\_SB.PCI0.LPC0.EC0.QTMD' > /proc/acpi/call
+    qtmd=$(cat /proc/acpi/call | cut -d '' -f1)
+    if [ $stmd == "0x0" ] && [ $qtmd == "0x0" ]
+    then echo "Running in Extreme Performance mode."
+    elif [ $stmd == "0x0" ] && [ $qtmd == "0x1" ]
+    then echo "Running in Battery Saving mode."
+    elif [ $stmd == "0x1" ] && [ $qtmd == "0x0" ]
+    then echo "Running in Intelligent Cooling mode."
+    fi
+}
+
+convert() {
+  case "$1" in
+    "0x0")
+      echo "off"
+      ;;
+    "0x1")
+      echo "on"
+      ;;
+    esac
+}
+
+verify_battery() {
+    check_acpi
+    echo '\_SB.PCI0.LPC0.EC0.FCGM' > /proc/acpi/call
+    rccheck=$(cat /proc/acpi/call | cut -d '' -f1)
+    echo '\_SB.PCI0.LPC0.EC0.BTSG' > /proc/acpi/call
+    bccheck=$(cat /proc/acpi/call | cut -d '' -f1)
+    echo "Rapid Charge mode is "$(convert $rccheck)", Battery Conservation mode is "$(convert $bccheck)"."
+}
+
+case "$option" in
+  "" | "-h" | "--help")
+    help
+    ;;
+    
+  "-c" | "--check")
+    verify_performance
+    verify_battery
+    ;;
+
+  "-p" | "--performance-mode")
+    check_acpi
+    case "$mode" in
+      "ic" | "cooling")
+        echo "Setting performance mode to Intelligent Cooling..."
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x000FB001' > /proc/acpi/call
+        verify_performance
+      ;;
+      "ep" | "performance")
+        echo "Setting performance mode to Extreme Performance..."
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0012B001' > /proc/acpi/call
+        verify_performance
+      ;;  
+      "bs" | "battery")
+        echo "Setting performance mode to Battery Saving..."
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0013B001' > /proc/acpi/call
+        verify_performance
+      ;;
+      "" | *)
+        echo "Invalid performance mode."
+        verify_performance
+      ;;
+      esac
+    ;;
+  
+  "-vp" | "--verify-performance")
+    verify_performance
+    ;;
+    
+  "-b" | "--battery-mode")
+    check_acpi
+    case "$mode" in
+      "rc" | "rapid")
+        echo "Setting battery mode to Rapid Charge (with Battery Conservation disabled)..."
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x05' > /proc/acpi/call
+        sleep 1
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x07' > /proc/acpi/call
+        verify_battery
+        ;;
+      "bc" | "conserve")
+        echo "Setting battery mode to Battery Conservation (with Rapid Charge disabled)..."
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x08' > /proc/acpi/call
+        sleep 1
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x03' > /proc/acpi/call
+        verify_battery
+        ;;
+       "" | *)
+        echo "Invalid battery mode."
+        verify_battery
+        ;;
+      esac
+    ;;
+    
+  "-vb" | "--verify-battery")
+    verify_battery
+    ;;
+esac

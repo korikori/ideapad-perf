@@ -1,0 +1,3 @@
+ACTION=="add", DEVPATH=="/module/acpi_call", SUBSYSTEM=="module", \
+  RUN+="/usr/bin/chgrp wheel /proc/acpi/call", \
+  RUN+="/usr/bin/chmod g+w /proc/acpi/call"
