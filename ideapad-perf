@@ -8,20 +8,21 @@ help() {
   echo
   echo "Options:"
   echo " -h, --help                   see this help message"
-  echo " -c, --check                  verify both performance and battery mode"
   echo " -p, --performance-mode       set performance mode"
   echo " -b, --battery-mode           set battery mode"
+  echo " -c, --check                  verify both performance and battery mode"
   echo " -vp, --verify-performance    verify performance mode"
   echo " -vb, --verify-battery        verify battery mode"
   echo
   echo "Valid performance modes:"
-  echo " ic, cooling                Intelligent Cooling"
-  echo " ep, performance            Extreme Performance"
-  echo " bs, battery                Battery Saving"
+  echo " ic, cooling            Intelligent Cooling"
+  echo " ep, performance        Extreme Performance"
+  echo " bs, battery            Battery Saving"
   echo
   echo "Valid battery modes:"
-  echo " rc, rapid                  Rapid Charge (with Battery Conservation disabled)"
-  echo " bc, conserve               Battery Conservation (with Rapid Charge disabled)"
+  echo " rc, rapid              Enable Rapid Charge (with Battery Conservation disabled)"
+  echo " bc, conserve           Enable Battery Conservation (with Rapid Charge disabled)"
+  echo " off                    Disable both Rapid Charge and Battery Conservation"
 }
 
 check_acpi() {
@@ -85,11 +86,13 @@ case "$option" in
         echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x000FB001' > /proc/acpi/call
         verify_performance
       ;;
+      
       "ep" | "performance")
         echo "Setting performance mode to Extreme Performance..."
         echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0012B001' > /proc/acpi/call
         verify_performance
       ;;  
+      
       "bs" | "battery")
         echo "Setting performance mode to Battery Saving..."
         echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0013B001' > /proc/acpi/call
@@ -116,6 +119,7 @@ case "$option" in
         echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x07' > /proc/acpi/call
         verify_battery
         ;;
+        
       "bc" | "conserve")
         echo "Setting battery mode to Battery Conservation (with Rapid Charge disabled)..."
         echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x08' > /proc/acpi/call
@@ -123,6 +127,15 @@ case "$option" in
         echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x03' > /proc/acpi/call
         verify_battery
         ;;
+        
+      "off")
+        echo "Disabling both Battery Conservation and Rapid Charge mode..."
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x08' > /proc/acpi/call
+        sleep 1
+        echo '\_SB.PCI0.LPC0.EC0.VPC0.SBMC 0x05' > /proc/acpi/call
+        verify_battery
+        ;;
+        
        "" | *)
         echo "Invalid battery mode."
         verify_battery
@@ -132,5 +145,9 @@ case "$option" in
     
   "-vb" | "--verify-battery")
     verify_battery
+    ;;
+    
+   "" | *)
+    echo "Invalid option."
     ;;
 esac
