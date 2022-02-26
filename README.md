@@ -1,5 +1,7 @@
 # ideapad-perf
-Battery manager to handle system performance modes and charge modes through acpi_calls (for IdeaPad 5 14are05). 
+Battery manager to handle system performance modes and charge modes through acpi_calls (for IdeaPad 5 14are05). There is also a handy applet for your system tray.
+
+![screenshot](https://github.com/korikori/ideapad-perf/blob/main/screenshot.png)
 
 ## Motivation
 
@@ -7,13 +9,13 @@ Similar to [battmngr](https://github.com/0xless/battmngr), but for the IdeaPad 5
 
 ## Requirements
 
-The script requires the `acpi_call` module loaded for your kernel.
+The original script requires the `acpi_call` module loaded for your kernel. In order to install and use the applet, you would also need `ruby` and `ruby-gtk3`.
 
 ## Installation
 
 You can download the script, make it executable, and add it to your path. You can run it with `sudo`, or you can install the supplied udev rule to make /proc/acpi/call writeable to all members of the `wheel` group.
 
-There is a package for Arch Linux available as a [release](https://github.com/korikori/ideapad-perf/releases/), including PKGBUILD and .install files if you want to build it yourself.
+There is a pre-built package for Arch Linux available as a [release](https://github.com/korikori/ideapad-perf/releases/), including PKGBUILD and .install files if you want to build it yourself. If you don't need the systray applet for whatever reason, use the older release. 
 
 ## Usage
 
