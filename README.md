@@ -1,7 +1,7 @@
 # ideapad-perf
 Battery manager to handle system performance modes and charge modes through acpi_calls (for IdeaPad 5 14are05). There is also a handy applet for your system tray.
 
-![screenshot](https://github.com/korikori/ideapad-perf/blob/main/screenshot.png)
+![screenshot](https://github.com/korikori/ideapad-perf/blob/main/screenshot2.png)
 
 ## Motivation
 
