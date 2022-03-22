@@ -5,7 +5,7 @@ Battery manager to handle system performance modes and charge modes through acpi
 
 ## Motivation
 
-Similar to [battmngr](https://github.com/0xless/battmngr), but for the IdeaPad 5 14are05. More information is available at the [ArchWiki](https://wiki.archlinux.org/title/Lenovo_IdeaPad_5_14are05).
+Similar to [battmngr](https://github.com/0xless/battmngr), but specifically for the IdeaPad 5 14are05 model 81YM. More information is available at the [ArchWiki](https://wiki.archlinux.org/title/Lenovo_IdeaPad_5_14are05). Note that the experimental branch of `battmngr` also works on this device.
 
 ## Requirements
 
