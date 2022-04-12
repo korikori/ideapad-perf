@@ -9,7 +9,7 @@ Similar to [battmngr](https://github.com/0xless/battmngr), but specifically for 
 
 ## Requirements
 
-The original script requires the `acpi_call` module loaded for your kernel. In order to install and use the applet, you would also need `ruby` and `ruby-gtk3`. If you are using Wayland, please see the [relevant note](https://github.com/korikori/ideapad-perf/edit/main/README.md#note-on-the-system-tray-applet-and-wayland) below.
+The original script requires the `acpi_call` module loaded for your kernel. In order to install and use the applet, you would also need `ruby` and `ruby-gtk3`. If you are using Wayland, please see the [relevant note](https://github.com/korikori/ideapad-perf#note-on-the-system-tray-applet-and-wayland) below.
 
 ## Installation
 
