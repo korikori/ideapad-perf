@@ -17,7 +17,7 @@ You can download the script, make it executable, and add it to your path. You ca
 
 There is a pre-built package for Arch Linux available as a [release](https://github.com/korikori/ideapad-perf/releases/), including PKGBUILD and .install files if you want to build it yourself. If you don't need the systray applet for whatever reason, use the older release.
 
-The applet's icon used in the screenshot is `preferences-system-power.svg`, part of [Flatery Dark](https://github.com/cbrnix/Flatery).
+The applet icon used in the screenshot is `preferences-system-power.svg`, part of [Flatery Dark](https://github.com/cbrnix/Flatery).
 
 ## Usage
 
