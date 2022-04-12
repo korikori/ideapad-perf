@@ -2,27 +2,27 @@
 require 'gtk3'
 
 si=Gtk::StatusIcon.new
-si.set_from_icon_name("gnome-power-manager")
+si.set_from_icon_name("preferences-system-power")
 
 #check active modes and set active menu option based on that
 def vpc
   vpcheck = `ideapad-perf -vp`
-  if vpcheck == "Running in Extreme Performance mode.\n"
+  if vpcheck == "Running in Extreme Performance mode.".chomp
     $vp = "ep"
-  elsif vpcheck == "Running in Battery Saving mode.\n"
+  elsif vpcheck == "Running in Battery Saving mode.".chomp
     $vp = "bs"
-  elsif vpcheck == "Running in Intelligent Cooling mode.\n"
+  elsif vpcheck == "Running in Intelligent Cooling mode.".chomp
     $vp = "ic"
   end
 end
 
 def vbc
   vbcheck = `ideapad-perf -vb`
-  if vbcheck == "Rapid Charge mode is on, Battery Conservation mode is off.\n"
+  if vbcheck == "Rapid Charge mode is on, Battery Conservation mode is off.".chomp
     $vb = "rc"
-  elsif vbcheck == "Rapid Charge mode is off, Battery Conservation mode is on.\n"
+  elsif vbcheck == "Rapid Charge mode is off, Battery Conservation mode is on.".chomp
     $vb = "bc"
-  elsif vbcheck == "Rapid Charge mode is off, Battery Conservation mode is off.\n"
+  elsif vbcheck == "Rapid Charge mode is off, Battery Conservation mode is off.".chomp
     $vb = "off"
   end
 end
