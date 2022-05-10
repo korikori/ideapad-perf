@@ -2,19 +2,9 @@
 require 'gtk3'
 
 si=Gtk::StatusIcon.new
-si.set_from_icon_name("preferences-system-power")
+si.set_from_icon_name("gnome-power-manager")
 
 #check active modes and set active menu option based on that
-def vpc
-  vpcheck = `ideapad-perf -vp`
-  if vpcheck == "Running in Extreme Performance mode.".chomp
-    $vp = "ep"
-  elsif vpcheck == "Running in Battery Saving mode.".chomp
-    $vp = "bs"
-  elsif vpcheck == "Running in Intelligent Cooling mode.".chomp
-    $vp = "ic"
-  end
-end
 
 def vbc
   vbcheck = `ideapad-perf -vb`
@@ -28,55 +18,17 @@ def vbc
 end
 
 #setting the performance and battery modes
-def setpmode(x)
-  `ideapad-perf -p #{x}`
-end
-
 def setbmode(x)
   `ideapad-perf -b #{x}`
 end
 
 #check initial states
-vpc
 vbc
 
 #menu
 menu=Gtk::Menu.new
 
 group = nil
-
-label1=Gtk::MenuItem.new(label: "Performance mode")
-label1.set_sensitive(false)
-menu.append(label1)
-
-item1=Gtk::RadioMenuItem.new(group, "Extreme Performance")
-menu.append(item1)
-item1.active = true if $vp == "ep"
-item1.signal_connect("activate") { 
-  if item1.active? == true
-    setpmode("ep")
-  end
-}
-
-item2=Gtk::RadioMenuItem.new(item1, "Battery Saving")
-menu.append(item2)
-item2.active = true if $vp == "bs"
-item2.signal_connect("activate") { 
-  if item2.active? == true
-    setpmode("bs")
-  end
-}
-
-item3=Gtk::RadioMenuItem.new(item1, "Intelligent Cooling")
-menu.append(item3)
-item3.active = true if $vp == "ic"
-item3.signal_connect("activate") { 
-  if item3.active? == true
-    setpmode("ic")
-  end
-}
-
-menu.append(Gtk::SeparatorMenuItem.new)
 
 label2=Gtk::MenuItem.new(label: "Battery mode")
 label2.set_sensitive(false)
