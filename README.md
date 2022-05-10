@@ -1,5 +1,7 @@
 # ideapad-perf
-Battery manager to handle system performance modes and charge modes through acpi_calls (for some models of Lenovo IdeaPad). There is also a handy applet for your system tray.
+Battery manager to handle battery charge modes through acpi_calls (for some models of Lenovo IdeaPad). There is also a handy applet for your system tray.
+
+⚠️ **This is an experimental branch that only manages the Rapid Charge/Battery Conservation modes, and should thus be more compatible than the original script.**
 
 ![screenshot](https://github.com/korikori/ideapad-perf/blob/main/screenshot2.png)
 
@@ -30,16 +32,8 @@ Syntax: ideapad-perf [OPTION] MODE
 
 Options:
  -h, --help                   see this help message
- -p, --performance-mode       set performance mode
  -b, --battery-mode           set battery mode
- -c, --check                  verify both performance and battery mode
- -vp, --verify-performance    verify performance mode
- -vb, --verify-battery        verify battery mode
-
-Valid performance modes:
- ic, cooling            Intelligent Cooling
- ep, performance        Extreme Performance
- bs, battery            Battery Saving
+ -c, -vb, --verify-battery    check (verify) battery mode
 
 Valid battery modes:
  rc, rapid              Enable Rapid Charge (with Battery Conservation disabled)
