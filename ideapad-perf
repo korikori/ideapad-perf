@@ -8,16 +8,8 @@ help() {
   echo
   echo "Options:"
   echo " -h, --help                   see this help message"
-  echo " -p, --performance-mode       set performance mode"
   echo " -b, --battery-mode           set battery mode"
-  echo " -c, --check                  verify both performance and battery mode"
-  echo " -vp, --verify-performance    verify performance mode"
-  echo " -vb, --verify-battery        verify battery mode"
-  echo
-  echo "Valid performance modes:"
-  echo " ic, cooling            Intelligent Cooling"
-  echo " ep, performance        Extreme Performance"
-  echo " bs, battery            Battery Saving"
+  echo " -c, -vb, --verify-battery    check (verify) battery mode"
   echo
   echo "Valid battery modes:"
   echo " rc, rapid              Enable Rapid Charge (with Battery Conservation disabled)"
@@ -32,21 +24,6 @@ check_acpi() {
     exit 1
   fi  
 }      
-
-verify_performance() {
-    check_acpi
-    echo '\_SB.PCI0.LPC0.EC0.STMD' > /proc/acpi/call
-    stmd=$(cat /proc/acpi/call | cut -d '' -f1)
-    echo '\_SB.PCI0.LPC0.EC0.QTMD' > /proc/acpi/call
-    qtmd=$(cat /proc/acpi/call | cut -d '' -f1)
-    if [ $stmd == "0x0" ] && [ $qtmd == "0x0" ]
-    then echo "Running in Extreme Performance mode."
-    elif [ $stmd == "0x0" ] && [ $qtmd == "0x1" ]
-    then echo "Running in Battery Saving mode."
-    elif [ $stmd == "0x1" ] && [ $qtmd == "0x0" ]
-    then echo "Running in Intelligent Cooling mode."
-    fi
-}
 
 convert() {
   case "$1" in
@@ -71,42 +48,6 @@ verify_battery() {
 case "$option" in
   "" | "-h" | "--help")
     help
-    ;;
-    
-  "-c" | "--check")
-    verify_performance
-    verify_battery
-    ;;
-
-  "-p" | "--performance-mode")
-    check_acpi
-    case "$mode" in
-      "ic" | "cooling")
-        echo "Setting performance mode to Intelligent Cooling..."
-        echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x000FB001' > /proc/acpi/call
-        verify_performance
-      ;;
-      
-      "ep" | "performance")
-        echo "Setting performance mode to Extreme Performance..."
-        echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0012B001' > /proc/acpi/call
-        verify_performance
-      ;;  
-      
-      "bs" | "battery")
-        echo "Setting performance mode to Battery Saving..."
-        echo '\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0013B001' > /proc/acpi/call
-        verify_performance
-      ;;
-      "" | *)
-        echo "Invalid performance mode."
-        verify_performance
-      ;;
-      esac
-    ;;
-  
-  "-vp" | "--verify-performance")
-    verify_performance
     ;;
     
   "-b" | "--battery-mode")
@@ -143,7 +84,7 @@ case "$option" in
       esac
     ;;
     
-  "-vb" | "--verify-battery")
+  "-c" | "-vb" | "--verify-battery")
     verify_battery
     ;;
     
