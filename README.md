@@ -1,11 +1,15 @@
 # ideapad-perf
-Battery manager to handle system performance modes and charge modes through acpi_calls (for IdeaPad 5 14are05). There is also a handy applet for your system tray.
+Battery manager to handle system performance modes and charge modes through acpi_calls (for some models of Lenovo IdeaPad). There is also a handy applet for your system tray.
 
 ![screenshot](https://github.com/korikori/ideapad-perf/blob/main/screenshot2.png)
 
 ## Motivation
 
-Similar to [battmngr](https://github.com/0xless/battmngr), but specifically for the IdeaPad 5 14are05 model 81YM. More information is available at the [ArchWiki](https://wiki.archlinux.org/title/Lenovo_IdeaPad_5_14are05). Note that the experimental branch of `battmngr` also works on this device.
+Similar to [battmngr](https://github.com/0xless/battmngr), but specifically for the following models:
+* IdeaPad 5 14ARE05 model 81YM. More information is available at the [ArchWiki](https://wiki.archlinux.org/title/Lenovo_IdeaPad_5_14are05#Power_management).
+* IdeaPad 5 Pro 14ACN6. More information is available at the [ArchWiki](https://wiki.archlinux.org/title/Lenovo_IdeaPad_5_Pro_14ACN6#Power_management_options).
+
+Note that the experimental branch of `battmngr` should also work on these devices.
 
 ## Requirements
 
