@@ -11,7 +11,9 @@ Similar to [battmngr](https://github.com/0xless/battmngr), but has been tested a
 
 I have now built a separate branch that only includes the battery-related modes (Rapid Charge and Battery Conservation), as they should be more cross-compatible and may potentially work across Lenovo models with recent Intel CPUs too (testers welcome). An Arch package for this branch is available as a release [here](https://github.com/korikori/ideapad-perf/releases/tag/r26.2f450da).
 
-Note that the experimental branch of `battmngr` should also work on these devices.
+**However, please have in mind that other Lenovo laptop models (especially Legion) have not been tested and are not expected to work with this script.**
+
+Note that the experimental branch of `battmngr` may also work on these and/or other devices.
 
 ## Requirements
 
