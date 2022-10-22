@@ -17,7 +17,7 @@ Note that the experimental branch of `battmngr` may also work on these and/or ot
 
 ## Requirements
 
-The original script requires the `acpi_call` module loaded for your kernel. In order to install and use the applet, you would also need `ruby` and `ruby-gtk3`. If you are using Wayland, please see the [relevant note](https://github.com/korikori/ideapad-perf#note-on-the-system-tray-applet-and-wayland) below.
+The original script requires the `acpi_call` module loaded for your kernel. In order to install and use the applet, you would also need `ruby` and `ruby-gtk3`. Note: there is now a new applet available written in `python` that you can try out thanks to @ervinpopescu. If you are using Wayland, you should use the Python one, otherwise see the [relevant note](https://github.com/korikori/ideapad-perf#note-on-the-system-tray-applet-and-wayland) below.
 
 ## Installation
 
@@ -55,9 +55,11 @@ Valid battery modes:
 
 As noted elsewhere, it is possible to activate both Rapid Charge and Battery Conservation on Linux. However, as this configuration is not obtainable using official Lenovo software on Windows and it would defeat the purpose of the Battery Conservation, I have chosen to explicitly prevent this - choosing one of the options will disable the other one first. If for any reason you need to achieve this effect, you can do so manually via the commands provided in the ArchWiki.
 
-## Note on the system tray applet and Wayland
+## Note on the system tray applets and Wayland
 
-Wayland and most modern GUI toolkits do not like system tray applets. There are libraries that provide similar functionality, but the Ruby bindings for them are non-existent or outdated and difficult to build. For now, there is a simple workaround - pass `GDK_BACKEND=x11` before starting the `ideapad-perf-tray.rb` script, like so:
+When using the Python applet: It should just work (but let us know if it doesn't).
+
+When using the Ruby applet: Wayland and most modern GUI toolkits do not like system tray applets. There are libraries that provide similar functionality, but the Ruby bindings for them are non-existent or outdated and difficult to build. For now, there is a simple workaround - pass `GDK_BACKEND=x11` before starting the `ideapad-perf-tray.rb` script, like so:
 
 ```
  GDK_BACKEND=x11 ideapad-perf-tray.rb
