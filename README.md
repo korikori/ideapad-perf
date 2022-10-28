@@ -17,13 +17,15 @@ Note that the experimental branch of `battmngr` may also work on these and/or ot
 
 ## Requirements
 
-The original script requires the `acpi_call` module loaded for your kernel. In order to install and use the applet, you would also need `ruby` and `ruby-gtk3`. Note: there is now a new applet available written in `python` that you can try out thanks to @ervinpopescu. If you are using Wayland, you should use the Python one, otherwise see the [relevant note](https://github.com/korikori/ideapad-perf#note-on-the-system-tray-applet-and-wayland) below.
+The original script requires the `acpi_call` module loaded for your kernel.
+* The Ruby applet also requires `ruby` and `ruby-gtk3`.
+* There is now a new applet available written in Python that you can try out thanks to @ervinpopescu - it requires `python`, `pygtk`, `python-gobject`. If you are using Wayland, you will probably have better luck with the Python one, otherwise see the [relevant note](https://github.com/korikori/ideapad-perf#note-on-the-system-tray-applet-and-wayland) below.
 
 ## Installation
 
 You can download the script, make it executable, and add it to your path. You can run it with `sudo`, or you can install the supplied udev rule to make /proc/acpi/call writeable to all members of the `wheel` group.
 
-There is a pre-built package for Arch Linux available as a [release](https://github.com/korikori/ideapad-perf/releases/), including PKGBUILD and .install files if you want to build it yourself. If you don't need the systray applet for whatever reason, use the older release.
+There is a pre-built package for Arch Linux available as a [release](https://github.com/korikori/ideapad-perf/releases/), including PKGBUILD and .install files if you want to build it yourself. If you don't need the systray applet for whatever reason, use the older release. Note that the packages have not been re-built to include the new Python applet yet, but you can still download it separately and use it as is.
 
 The applet icon used in the screenshot is `preferences-system-power.svg`, part of [Flatery Dark](https://github.com/cbrnix/Flatery).
 
